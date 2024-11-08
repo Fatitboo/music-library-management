@@ -1,5 +1,6 @@
-<img width="1659" alt="Ảnh màn hình 2024-11-08 lúc 13 08 14" src="https://github.com/user-attachments/assets/c72c69a3-19fe-4e0a-b5e6-1c6949dac235"># Music Library Management API
+# Music Library Management API
 <img src="https://dj.studio/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Fresize%3Dfit%3Acrop%2Cheight%3A630%2Cwidth%3A1200%2Foutput%3Dformat%3Apng%2F0ZGbtT0gSZiOQdGst6Wn&w=1487&q=30">
+
 The Music Library Management API allows users to manage their music library by creating, reading, updating, and deleting music tracks and playlists. It also includes search functionality, play tracks, and other advanced features.
 
 ## Table of Contents
@@ -104,25 +105,19 @@ Now the application will run on port [http://localhost:5173](http://localhost:51
 
 This is Home Page with Playlists list and Tracks list in the sidebar. We can search tracks and playlists here.
 
-```
 <img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046214/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.08_mnedri.png" >
-```
 
 This is Playlist Detail Page. We can interact CURD with Playlist. It's aslo update Tracks in Playlist.
 
-```
 <img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046214/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.20_fcrcmu.png">
-```
 
 These are some image about CURD Track and Playlist
 
-```
 <img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046207/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.41_qsxevg.png">
-```
 
-```
 <img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046206/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.28_jei6as.png">
-```
+
+
 ## Conclusion
 
 With this setup, your **Music Library Management API** project is ready to run with a pre-loaded dataset in MongoDB. This setup guide enables you to quickly restore and test the database on any machine, making it easier to develop, test, and deploy with reliable data. Using Docker simplifies the deployment and environment consistency, ensuring that the API and MongoDB work seamlessly across different setups. Enjoy managing your music library efficiently!
