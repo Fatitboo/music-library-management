@@ -1,16 +1,15 @@
-# Music Library Management API
-
-The Music Library Management API allows users to manage their music library by creating, reading, updating, and deleting music tracks and playlists. It also includes search functionality, streaming of playlists, and other advanced features.
+<img width="1659" alt="Ảnh màn hình 2024-11-08 lúc 13 08 14" src="https://github.com/user-attachments/assets/c72c69a3-19fe-4e0a-b5e6-1c6949dac235"># Music Library Management API
+<img src="https://dj.studio/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2Fresize%3Dfit%3Acrop%2Cheight%3A630%2Cwidth%3A1200%2Foutput%3Dformat%3Apng%2F0ZGbtT0gSZiOQdGst6Wn&w=1487&q=30">
+The Music Library Management API allows users to manage their music library by creating, reading, updating, and deleting music tracks and playlists. It also includes search functionality, play tracks, and other advanced features.
 
 ## Table of Contents
 1. [Features](#features)
 2. [Technologies](#technologies)
 3. [Setup & Installation](#setup--installation)
-4. [Configuration](#configuration)
-5. [API Documentation](#api-documentation)
-6. [Running the Application](#running-the-application)
-7. [Database](#database)
-8. [Folder Structure](#folder-structure)
+4. [Database](#database)
+5. [Running the Application](#running-the-application)
+6. [Demo](#demo)
+6. [Conclusion](#conclusion)
 
 ---
 
@@ -19,9 +18,7 @@ The Music Library Management API allows users to manage their music library by c
 - **Track Management**: CRUD operations for music tracks (title, artist, album, genre, release year, etc.).
 - **Playlist Management**: CRUD operations for playlists, including adding/removing tracks.
 - **Search API**: Find tracks and playlists by title, artist, album, or genre.
-- **MP3 Streaming**: Stream playlist MP3 files in `.m3u` format.
 - **Fuzzy Search** (optional): Enhanced search with approximate matching.
-- **Swagger UI Documentation** for easy API exploration.
 - **Docker Support**: Easily set up and run with Docker and MongoDB.
 
 ---
@@ -32,232 +29,85 @@ The Music Library Management API allows users to manage their music library by c
 - **NestJS**: Backend framework.
 - **MongoDB 7.0**: Database.
 - **Docker**: For containerized deployment.
-- **Swagger**: API documentation.
 
 ---
 
 ## Setup & Installation
 
-1. **Clone the repository**
+  **Clone the repository**
 
     ```bash
     git clone https://github.com/your-username/music-library-management.git
     cd music-library-management
     ```
 
-2. **Install dependencies**
-
-    ```bash
-    npm install
-    ```
-
-3. **Set up environment variables**
-
-    Create a `.env` file in the root directory and specify the following variables:
-
-    ```dotenv
-    MONGODB_URI=mongodb://localhost:27017/music-library
-    PORT=3000
-    ```
-
-4. **Install MongoDB** (or use Docker as described below).
-
-    - Install and start MongoDB on your machine, or run MongoDB in a container using Docker.
-
 ---
 
-## Configuration
+## Database
 
-### Docker Setup (optional)
+We have to install docker to run this app. So, if you don't have Docker, Please install it.
 
-To run the application and MongoDB in Docker containers, use the provided `docker-compose.yml` file.
+1. **Start the Docker Containers**
+   
+Start up the MongoDB and API containers:
 
-```yaml
-version: '3'
-services:
-  mongo:
-    image: mongo:7.0
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+> docker-compose up -d
 
-  app:
-    build: .
-    container_name: music_library_app
-    ports:
-      - "3000:3000"
-    environment:
-      MONGODB_URI: mongodb://mongo:27017/music-library
-    depends_on:
-      - mongo
+2. **Copy the `music_library_dump.tar.gz` File into the MongoDB Container**
 
-volumes:
-  mongo-data:
+Use the `docker cp` command to copy the database dump file into the MongoDB container.
 
-# API Documentation
+> docker cp ./music_library_dump.tar.gz mongodb:/data/music_library_dump.tar.gz
 
-The following API documentation provides details on endpoints for the Music Library Management API.
+3. **Restore the Database Inside the MongoDB Container**
 
-### Base URL
-> http://localhost:3000/api
+Once the file is inside the container, you can restore it using the `mongorestore` command. Connect to the MongoDB container:
+
+> docker exec -it mongodb bash
+
+Inside the MongoDB container, run the following command to restore the dump:
+
+> mongorestore --gzip --archive=/data/music_library_dump.tar.gz
+
+This will restore the `music_library` database
+
+## Running the Application
+
+When we restore mongodump above there, the backend system api aslo run on port 3000. So we don't have to care about it. What we care is install and run frontend application. 
+
+Install dependences:
+
+> cd frontend
+> npm install
+
+Run application
+
+> npm run dev
+
+Now the application will run on port `[http://localhost:5173](http://localhost:5173/)`
+
+## Demo
+
+**Some image of the application after running**
+
+This is Home Page with Playlists list and Tracks list in the sidebar. We can search tracks and playlists here.
+
+<img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046214/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.08_mnedri.png" >
+
+This is Playlist Detail Page. We can interact CURD with Playlist. It's aslo update Tracks in Playlist.
+<img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046214/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.20_fcrcmu.png">
+
+These are some image about CURD Track and Playlist
+<img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046207/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.41_qsxevg.png">
+
+<img src="https://res.cloudinary.com/dvnxdtrzn/image/upload/v1731046206/shopDEV/%E1%BA%A2nh_m%C3%A0n_h%C3%ACnh_2024-11-08_l%C3%BAc_13.09.28_jei6as.png">
+
+## Conclusion
+
+With this setup, your **Music Library Management API** project is ready to run with a pre-loaded dataset in MongoDB. This setup guide enables you to quickly restore and test the database on any machine, making it easier to develop, test, and deploy with reliable data. Using Docker simplifies the deployment and environment consistency, ensuring that the API and MongoDB work seamlessly across different setups. Enjoy managing your music library efficiently!
+
+### Contact:
+- [Nguyen Van Phat](https://www.linkedin.com/in/fatitboo/)
+- ngxvanphat@gmail.com
 
 
-## Endpoints
-
-### Tracks
-
-#### 1. Create a New Track
-
-- **Endpoint**: `POST /tracks`
-- **Description**: Creates a new music track.
-- **Body Parameters**:
-    - `title` (string) - The title of the track.
-    - `artist` (string) - The artist of the track.
-    - `album` (string) - The album name.
-    - `genre` (string) - The genre of the track.
-    - `releaseYear` (number) - The release year.
-    - `duration` (number) - Duration of the track in seconds.
-    - `file` (file) - The MP3 file of the track.
-- **Response**:
-    - `201 Created` with the created track details.
-
-#### 2. Get All Tracks
-
-- **Endpoint**: `GET /tracks`
-- **Description**: Retrieves all music tracks.
-- **Response**:
-    - `200 OK` with a list of all tracks.
-
-#### 3. Get a Track by ID
-
-- **Endpoint**: `GET /tracks/:id`
-- **Description**: Retrieves a specific track by its ID.
-- **Path Parameters**:
-    - `id` (string) - The ID of the track.
-- **Response**:
-    - `200 OK` with track details or `404 Not Found` if the track doesn’t exist.
-
-#### 4. Update a Track
-
-- **Endpoint**: `PUT /tracks/:id`
-- **Description**: Updates details of a specific track.
-- **Path Parameters**:
-    - `id` (string) - The ID of the track.
-- **Body Parameters**: Any combination of track fields (e.g., `title`, `artist`, etc.).
-- **Response**:
-    - `200 OK` with updated track details or `404 Not Found` if the track doesn’t exist.
-
-#### 5. Delete a Track
-
-- **Endpoint**: `DELETE /tracks/:id`
-- **Description**: Deletes a specific track by ID.
-- **Path Parameters**:
-    - `id` (string) - The ID of the track.
-- **Response**:
-    - `204 No Content` on success or `404 Not Found` if the track doesn’t exist.
-
----
-
-### Playlists
-
-#### 1. Create a New Playlist
-
-- **Endpoint**: `POST /playlists`
-- **Description**: Creates a new playlist.
-- **Body Parameters**:
-    - `title` (string) - The title of the playlist.
-    - `album_cover` (file) - Cover image for the playlist.
-    - `tracks` (array of track IDs) - List of tracks in the playlist.
-- **Response**:
-    - `201 Created` with the created playlist details.
-
-#### 2. Get All Playlists
-
-- **Endpoint**: `GET /playlists`
-- **Description**: Retrieves all playlists.
-- **Response**:
-    - `200 OK` with a list of all playlists.
-
-#### 3. Get a Playlist by ID
-
-- **Endpoint**: `GET /playlists/:id`
-- **Description**: Retrieves a specific playlist by its ID.
-- **Path Parameters**:
-    - `id` (string) - The ID of the playlist.
-- **Response**:
-    - `200 OK` with playlist details or `404 Not Found` if the playlist doesn’t exist.
-
-#### 4. Update a Playlist
-
-- **Endpoint**: `PUT /playlists/:id`
-- **Description**: Updates a specific playlist.
-- **Path Parameters**:
-    - `id` (string) - The ID of the playlist.
-- **Body Parameters**: Any combination of playlist fields (e.g., `title`, `tracks`, etc.).
-- **Response**:
-    - `200 OK` with updated playlist details or `404 Not Found` if the playlist doesn’t exist.
-
-#### 5. Delete a Playlist
-
-- **Endpoint**: `DELETE /playlists/:id`
-- **Description**: Deletes a specific playlist by ID.
-- **Path Parameters**:
-    - `id` (string) - The ID of the playlist.
-- **Response**:
-    - `204 No Content` on success or `404 Not Found` if the playlist doesn’t exist.
-
----
-
-### Search
-
-#### Search Tracks and Playlists
-
-- **Endpoint**: `GET /search`
-- **Description**: Searches for tracks or playlists by title, artist, album, or genre.
-- **Query Parameters**:
-    - `query` (string) - The search query.
-- **Response**:
-    - `200 OK` with a list of matching tracks and playlists.
-
----
-
-### Streaming
-
-#### Stream Playlist in M3U Format
-
-- **Endpoint**: `GET /playlists/:id/stream`
-- **Description**: Streams the playlist as an `.m3u` file, compatible with media players like VLC.
-- **Path Parameters**:
-    - `id` (string) - The ID of the playlist.
-- **Response**:
-    - `200 OK` with `.m3u` formatted content or `404 Not Found` if the playlist doesn’t exist.
-
----
-
-### Error Handling
-
-Common HTTP responses for error handling include:
-- `400 Bad Request`: Invalid data or parameters.
-- `404 Not Found`: The requested resource doesn’t exist.
-- `500 Internal Server Error`: Server-related issues.
-
----
-
-### Example Requests
-
-#### Create Track Example
-
-```json
-POST /tracks
-{
-  "title": "Track Title",
-  "artist": "Artist Name",
-  "album": "Album Name",
-  "genre": "Genre",
-  "releaseYear": 2022,
-  "duration": 240,
-  "file": "track.mp3"
-}
-```
