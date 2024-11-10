@@ -56,6 +56,10 @@ Start up the MongoDB and API containers:
 docker-compose up -d --build
 ```
 
+```
+docker-compose up -d
+```
+
 2. **Copy the `music_library_dump.tar.gz` File into the MongoDB Container**
 
 Use the `docker cp` command to copy the database dump file into the MongoDB container.
