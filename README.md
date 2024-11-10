@@ -53,7 +53,7 @@ We have to install docker to run this app. So, if you don't have Docker, Please 
 Start up the MongoDB and API containers:
 
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 2. **Copy the `music_library_dump.tar.gz` File into the MongoDB Container**
